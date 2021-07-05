@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  springapp:
+    build: spring
+    ports:
+      - "8080:8080"
+    depends_on:
+      - "mariadb"
+    command: sh -c "sleep 5 && java -jar build/libs/springapp-0.1.0-SNAPSHOT.jar"
+
+  mariadb:
+    image: "mariadb:latest"
+    environment:
+      - MYSQL_ROOT_PASSWORD=mypass
+      - MYSQL_DATABASE=bank
+      - MYSQL_USER=bank
+      - MYSQL_PASSWORD=banksecret
+
+  camel:
+    build: camel
